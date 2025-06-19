@@ -1,0 +1,26 @@
+name: daily-23f2004125@ds.study.iitm.ac.in
+
+on:
+  schedule:
+    - cron: "30 4 * * *" # Runs daily at 4:30 AM UTC
+  workflow_dispatch: # (Optional: allows manual trigger)
+
+jobs:
+  commit-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Make a dummy change
+        run: |
+          echo "Last run: $(date -u)" > last_run.txt
+
+      - name: Commit change
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "23f2004125@ds.study.iitm.ac.in"
+          git add last_run.txt
+          git commit -m "Daily commit from GitHub Action"
+          git push
